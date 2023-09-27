@@ -1,0 +1,26 @@
+@model MinimalRSSReader.Models.RSSFeed
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FeedUrl">Feed URL</label>
+        <input asp-for="FeedUrl" class="form-control" />
+        <span asp-validation-for="FeedUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PubDate">Publish Date</label>
+        <input asp-for="PubDate" class="form-control" />
+        <span asp-validation-for="PubDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add RSS Feed</button>
+</form>
+

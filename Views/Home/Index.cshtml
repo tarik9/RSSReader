@@ -1,0 +1,76 @@
+﻿@model List<RSSFeed>
+@using System.Linq
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<h2>RSS Feed Reader</h2>
+<hr />
+<br />
+@using (Html.BeginForm())
+{
+    <input type="URL" name="RSSURL" placeholder="Enter RSS Feed URL Here..." class="form-control" value="@ViewBag.URL" style="min-width:100%" />
+    <br />
+    <input type="submit" class="btn btn-danger" />
+}
+
+<li class="nav-item">
+    <a class="nav-link" asp-controller="RSSFeed" asp-action="Add">Add RSS Feed</a>
+</li>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Feed URL</th>
+            <th>Description</th>
+            <th>Publish Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var feed in Model)
+        {
+            <tr>
+                <td>@feed.Name</td>
+                <td>@feed.FeedUrl</td>
+                <td>@feed.Description</td>
+                <td>@feed.PubDate</td>
+                <td>
+                    <form asp-controller="Home" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@feed.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.RSSFeed != null)
+{
+    <h3>Latest RSS Feed Items</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Link</th>
+                <th>Description</th>
+                <th>Publish Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.RSSFeed)
+            {
+                <tr>
+                    <td>@item.Title.Text</td>
+                    <td><a href="@item.Links[0].Uri.AbsoluteUri">@item.Links[0].Uri.AbsoluteUri</a></td>
+                    <td>@item.Summary.Text</td>
+                    <td>@item.PublishDate.LocalDateTime.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
